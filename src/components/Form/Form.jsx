@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Form.css";
+import OpenAI from "openai";
 
 const StoryForm = () => {
   const [story, setStory] = useState("");
   const [language, setLanguage] = useState("");
-  const [ageRange, setAgeRange] = useState([0, 100]);
+  const [age, setage] = useState("0");
   const [writingStyle, setWritingStyle] = useState("");
-  const [storyLength, setStoryLength] = useState("");
+  const [storyLength, setStoryLength] = useState("1");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({ story, language, ageRange, writingStyle, storyLength });
+    console.log({ story, language, age, writingStyle, storyLength });
     // Add your form submission logic here
   };
 
@@ -39,12 +40,14 @@ const StoryForm = () => {
         </select>
       </div>
       <div>
-        <label htmlFor="ageRange">Readers Age Range:{ageRange}</label>
+        <label htmlFor="age">Readers Age: {age}</label>
         <input
           type="range"
-          id="ageRange"
-          value={ageRange[0]}
-          onChange={(e) => setAgeRange([Number(e.target.value)])}
+          id="age"
+          min="0"
+          max="18"
+          value={age}
+          onChange={(e) => setage([Number(e.target.value)])}
         />
       </div>
       <div>
@@ -84,7 +87,7 @@ const StoryForm = () => {
         </select>
       </div>
       <div>
-        <label htmlFor="storyLength">Number of Pages {storyLength}:</label>
+        <label htmlFor="storyLength">Number of Pages: {storyLength}</label>
         <input
           type="range"
           id="storyLength"
